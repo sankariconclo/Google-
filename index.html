@@ -80,6 +80,15 @@
                         scrt2URL: 'https://orgfarm-939ed0acd8-dev-ed.develop.my.salesforce-scrt.com'
                     }
                 );
+                embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+                    "Order_Number": "867-5309",
+                    "Customer_ID": "11098324"
+                });
+
+                embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({ 
+                    "customerEmail": 'ankit.gangwani@slalom.com' 
+                });
+
             } catch (err) {
                 console.error('Error loading Embedded Messaging: ', err);
             }
