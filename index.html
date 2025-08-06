@@ -64,16 +64,13 @@
 
     <!-- Footer -->
     <footer style="background-color: #2c3e50; color: white; text-align: center; padding: 20px;">
-        &copy; 2025 FakeWave Inc. | Powered by Nothingness (107)™
+        &copy; 2025 FakeWave Inc. | Powered by Nothingness (108)™
     </footer>
 
     <script type='text/javascript'>
         function initEmbeddedMessaging() {
             try {
                 embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
-
-                
-
                 embeddedservice_bootstrap.init(
                     '00DgK000003CzKX',
                     'Github_Messaging_Setting',
@@ -82,9 +79,8 @@
                         scrt2URL: 'https://orgfarm-939ed0acd8-dev-ed.develop.my.salesforce-scrt.com'
                     }
                 );
-                embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
-                    "customerEmail": "ankit.gangwaniiii@slalom.com"
-                });            
+                embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({ "customerEmail": "ankit.gangwaniiii@slalom.com" });
+
             } catch (err) {
                 console.error('Error loading Embedded Messaging: ', err);
             }
