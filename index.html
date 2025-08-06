@@ -85,10 +85,11 @@
                     "Customer_ID": "11098324"
                 });
 
-                embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({ 
-                    "customerEmail": 'ankit.gangwani@slalom.com' 
+                window.addEventListener("onEmbeddedMessagingReady", e => {
+                    embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({ "customerEmail": customerEmail });
+                    console.log('prechart customerEmail = ', customerEmail);
                 });
-
+                
             } catch (err) {
                 console.error('Error loading Embedded Messaging: ', err);
             }
