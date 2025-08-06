@@ -64,7 +64,7 @@
 
     <!-- Footer -->
     <footer style="background-color: #2c3e50; color: white; text-align: center; padding: 20px;">
-        &copy; 2025 FakeWave Inc. | Powered by Nothingness (111)™
+        &copy; 2025 FakeWave Inc. | Powered by Nothingness (112)™
     </footer>
 
     <script type='text/javascript'>
@@ -74,7 +74,16 @@
 
                 window.addEventListener("onEmbeddedMessagingReady", () => {
                     console.log("Received the onEmbeddedMessagingReady event…");
-                    embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({ "customerEmail": "ankit.gangwaniiii@slalom.com" });
+
+                    embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({
+                        // List the pre-chat field names with the value and whether
+                        // it's editable in the pre-chat form.
+                        "customerEmail": {
+                            "value": "ankit.gangwaniiii@slalom.com",
+                            "isEditableByEndUser": false
+                        }
+                    });
+
                 });
 
                 embeddedservice_bootstrap.init(
