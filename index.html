@@ -85,11 +85,9 @@
                     "Customer_ID": "11098324"
                 });
 
-                window.addEventListener("onEmbeddedMessagingReady", e => {
-                    embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({ "customerEmail": customerEmail });
-                    console.log('prechart customerEmail = ', customerEmail);
-                });
-
+               
+                embeddedservice_bootstrap.prechatAPI.setVisiblePrechatFields({ "customerEmail": customerEmail });
+            
             } catch (err) {
                 console.error('Error loading Embedded Messaging: ', err);
             }
