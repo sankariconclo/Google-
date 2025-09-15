@@ -63,7 +63,7 @@
     list-style: none;
     margin: 0; /* Remove any default margin */
 }
-    ..sidebar-nav li {
+    .sidebar-nav li {
     border-bottom: 1px solid #f1f3f4;
     margin: 0; /* Ensure no margin on list items */
 }
@@ -1363,7 +1363,27 @@ function applyCustomAnalyticsDateRange() {
             }
  
     </script>
+      <script type='text/javascript'>
+        function initEmbeddedMessaging() {
+            try {
+                embeddedservice_bootstrap.settings.language = 'en_US';
+                embeddedservice_bootstrap.init(
+                    '00DgK00000ADqpX',
+                    'Agentforce_Service_Agents_to_External_Website',
+                    'https://orgfarm-798269921f-dev-ed.develop.my.site.com/ESWAgentforceServiceAge1757500134983',
+                    {
+                        scrt2URL: 'https://orgfarm-798269921f-dev-ed.develop.my.salesforce-scrt.com'
+                    }
+                );
+            } catch (err) {
+                console.error('Error loading Embedded Messaging: ', err);
+            }
+        };
+    </script>
+    <!-- Only include this script once -->
+    <script type='text/javascript' src='https://orgfarm-798269921f-dev-ed.develop.my.site.com/ESWAgentforceServiceAge1757500134983/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 
 </body>
+
 
 </html>
