@@ -5,37 +5,485 @@
     <meta charset="UTF-8">
     <title>WhatsApp Business API Dashboard</title>
     <style>
-        /* Paste all the CSS from the WhatsApp Business API Dashboard plugin here */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    /* Main container should not be flex if you want sidebar to scroll with page */
+    .whatsapp-dashboard-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+    /* Sidebar Styles */
+   .sidebar {
+    border-radius: 12px;
+    width: 280px;
+    background: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    padding: 0;
+    height: 40vh;
+    overflow-y: auto;
+    float: left;
+}
+   .table-scroll-container {
+        width: 100%;
+        overflow-x: auto;
+        margin-bottom: 0;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        background: white;
+        padding: 0 30px;
+    }
+  .sidebar-header {
+    padding: 15px 20px; /* Reduce padding */
+    border-bottom: 1px solid #e9ecef;
+    background: #FFDE59;
+    color: #333;
+    border-radius: 12px 12px 0 0;
+    margin: 0; /* Ensure no margin */
+}
+    .sidebar-header h2 {
+        font-size: 18px;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .sidebar-header p {
+        font-size: 12px;
+        margin: 5px 0 0 0;
+        opacity: 0.9;
+    }
+    .sidebar-nav {
+    padding: 0;
+    list-style: none;
+    margin: 0; /* Remove any default margin */
+}
+    ..sidebar-nav li {
+    border-bottom: 1px solid #f1f3f4;
+    margin: 0; /* Ensure no margin on list items */
+}
+			.sidebar-nav li:last-child {
+    border-bottom: none; /* Remove border from last item to eliminate spacing */
+}
 
-        /* Main container should not be flex if you want sidebar to scroll with page */
-        .whatsapp-dashboard-container {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #5f6368;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    gap: 12px;
+    margin: 0; /* Ensure no margin on links */
+}
+    .sidebar-nav a:hover {
+        background-color: #f0f0f0;
+        color: #000000;
+    }
+    .sidebar-nav a.active {
+        background-color: #e6e6e6;
+        color: #000000;
+        border-right: 3px solid #FFDE59;
+        font-weight: 600;
+    }
+    .sidebar-nav .icon {
+        font-size: 18px;
+        width: 20px;
+        text-align: center;
+    }
+    /* Main Content Area */
+    .main-content {
+        margin-left: 280px;
+        flex: 1;
+        padding: 0;
+		 
+        background: #f8f9fa;
+    }
+.top-header {
+    background: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid #e9ecef;
+    width: calc(100% - 60px); /* Changed from 95% to match data-table-container */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    border-radius: 12px;
+    margin: 20px 30px; /* Added left and right margin to center it */
+}
 
-        /* Sidebar Styles */
+    .page-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #202124;
+       
+    }
+    .header-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+    .btn {
+        background: #FFDE59;
+        color: #333;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .btn:hover {
+        background: #e6cb4c;
+    }
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+    /* Content Area */
+    .content-area {
+        padding: 20px;
+    }
+       .page-section {
+        display: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .page-section.active {
+        display: block;
+    }
+ .data-table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 2px 3px; /* Added consistent margin like top-header */
+    width: calc(105% - 60px); /* Same width calculation as top-header */
+    box-sizing: border-box;
+}
+ .table-header {
+        padding: 15px 30px;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+       width: 100%;
+        box-sizing: border-box;
+    }
+     .table-title {
+    font-size: 18px;
+    font-weight: 600; /* Keep this the same */
+    color: #5f6368; /* Change to match table header color */
+    margin: 0;
+    text-transform: uppercase; /* Add to match table headers */
+    letter-spacing: 0.5px; /* Add to match table headers */
+    font-size: 12px; /* Make same size as table headers */
+}
+   .table-info {
+        font-size: 14px;
+        color: #5f6368;
+        margin-left: auto;
+        padding-left: 15px;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+        .data-table th,
+    .data-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #f1f3f4;
+    }
+   .data-table th {
+    background: #f8f9fa;
+    font-weight: 400; /* Change from 600 to 400 for normal weight */
+    color: #5f6368;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+    .data-table td {
+        font-size: 14px;
+        color: #202124;
+    }
+    .data-table tr:hover {
+        background-color: #f8f9fa;
+    }
+    /* Status Badges */
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: capitalize;
+    }
+    .status-approved {
+        background: #fff9e6;
+        color: #d4a017;
+    }
+    .status-pending {
+        background: #fff8e1;
+        color: #f57f17;
+    }
+    .status-rejected {
+        background: #ffebee;
+        color: #c62828;
+    }
+    /* Analytics Cards */
+    .analytics-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    .analytics-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border-top: 4px solid #FFDE59;
+    }
+    .analytics-card h3 {
+        font-size: 14px;
+        color: #5f6368;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .analytics-number {
+        font-size: 32px;
+        font-weight: 700;
+        color: #202124;
+        margin-bottom: 5px;
+    }
+    .analytics-change {
+        font-size: 12px;
+        color: #FFDE59;
+    }
+    /* Loading and Error States */
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: #5f6368;
+    }
+    .error {
+        background: #ffebee;
+        color: #c62828;
+        padding: 15px 20px;
+        border-radius: 6px;
+        margin: 20px 0;
+        border-left: 4px solid #f44336;
+    }
+    .success {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 15px 20px;
+        border-radius: 6px;
+        margin: 20px 0;
+        border-left: 4px solid #4caf50;
+    }
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 30px;
+        border-top: 1px solid #e9ecef;
+        background: white;
+        border-radius: 0 0 12px 12px;
+    }
+    .pagination-info {
+        font-size: 14px;
+        color: #5f6368;
+    }
+    .pagination-controls {
+        display: flex;
+        gap: 10px;
+    }
+    .pagination-btn {
+        padding: 6px 12px;
+        border: 1px solid #dadce0;
+        background: white;
+        color: #5f6368;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+    .pagination-btn:hover {
+        background: #f1f3f4;
+    }
+    .pagination-btn.active {
+        background: #FFDE59;
+        color: #333;
+        border-color: #FFDE59;
+    }
+    .status-unknown {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+    /* Template Preview */
+    .template-preview {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-family: monospace;
+        font-size: 12px;
+        color: #5f6368;
+        max-height: 100px;
+        overflow-y: auto;
+    }
+    /* Responsive Design */
+    @media (max-width: 768px) {
         .sidebar {
-            border-radius: 12px;
-            width: 280px;
-            background: white;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-            padding: 0;
-            height: 40vh;
-            overflow-y: auto;
-            float: left;
+            width: 100%;
+            position: relative;
+            height: auto;
         }
+        .main-content {
+            margin-left: 0;
+        }
+        .analytics-cards {
+            grid-template-columns: 1fr;
+        }
+        .content-area {
+            padding: 15px;
+        }
+        .data-table th,
+        .data-table td {
+            padding: 10px 15px;
+        }
+    }
+    .status-verified {
+        background: #fff9e6;
+        color: #d4a017;
+    }
+    .status-unverified {
+        background: #ffebee;
+        color: #c62828;
+    }
+    /* Date Filter Container */
+    .date-filter-container {
+        background: white;
+        padding: 10px 30px;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        flex-wrap: wrap;
+		width: calc(105% - 60px); 
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+    /* Date Filter Options */
+    .date-filter-options {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .date-filter-options label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #5f6368;
+    }
+    .date-filter-options input[type="radio"] {
+        margin: 0;
+    }
+    /* Custom Date Range */
+    .custom-date-range {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+		width: calc(105% - 60px); 
+        margin-left: auto;
+    }
+    .date-picker-container {
+        display: flex;
+        gap: 10px;
+    }
+    .date-picker-container input[type="date"] {
+        padding: 8px;
+        border: 1px solid #dadce0;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    /* Date Range Display */
+    .date-range-display {
+        margin-left: auto;
+        font-size: 14px;
+        color: #5f6368;
+        background: #f1f3f4;
+        padding: 6px 12px;
+        border-radius: 4px;
+    }
+    /* Apply Button */
+    .custom-date-range button {
+        padding: 8px 16px;
+        background: #FFDE59;
+        color: #333;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .custom-date-range button:hover {
+        background: #e6cb4c;
+    }
+			.date-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 
-        /* Rest of the CSS from the plugin */
-        /* ... */
-    </style>
+.date-label {
+    font-size: 12px;
+    color: #5f6368;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.date-picker-container {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.date-picker-container input[type="date"] {
+    padding: 8px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 140px;
+}
+</style>
+
 </head>
 
 <body>
@@ -280,8 +728,7 @@
                 } else {
                     showError('WhatsApp API credentials not found. Please configure them in your settings.');
                 }
-            });
-
+         
             async function loadDashboardData() {
                 const wabaId = document.getElementById('wabaId').value;
                 const accessToken = document.getElementById('accessToken').value;
@@ -916,6 +1363,7 @@ function applyCustomAnalyticsDateRange() {
             }
  
     </script>
+
 </body>
 
 </html>
