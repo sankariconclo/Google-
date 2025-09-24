@@ -414,46 +414,26 @@
         </div>
     </footer>
 
-    <!-- Agentforce Chat Integration -->
-    <script type='text/javascript'>
-        function initEmbeddedMessaging() {
-            try {
-                embeddedservice_bootstrap.settings.language = 'en_US';
-                embeddedservice_bootstrap.init(
-                    '00DgK00000ADqpX',
-                    'Agentforce_Service_Agents_to_External_Website',
-                    'https://orgfarm-798269921f-dev-ed.develop.my.site.com/ESWAgentforceServiceAge1757500134983',
-                    {
-                        scrt2URL: 'https://orgfarm-798269921f-dev-ed.develop.my.salesforce-scrt.com'
-                    }
-                );
-            } catch (err) {
-                console.error('Error loading Embedded Messaging: ', err);
-            }
-        };
+   <script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
 
-        function startChat() {
-            // This will open the embedded messaging widget
-            if (typeof embeddedservice_bootstrap !== 'undefined' && embeddedservice_bootstrap.isMessagingInitialized) {
-                embeddedservice_bootstrap.messaging.open();
-            } else {
-                alert('Chat system is loading... Please try again in a moment.');
-            }
-        }
+			embeddedservice_bootstrap.init(
+				'00DfI000009x1w0',
+				'Agentforce_External_Sites',
+				'https://democmfg2-dev-ed.develop.my.site.com/ESWAgentforceExternalSi1758693276119',
+				{
+					scrt2URL: 'https://democmfg2-dev-ed.develop.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://democmfg2-dev-ed.develop.my.site.com/ESWAgentforceExternalSi1758693276119/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 
-        // Hide chat indicator when chat is opened
-        document.addEventListener('DOMContentLoaded', function() {
-            const chatIndicator = document.getElementById('chatIndicator');
-            chatIndicator.addEventListener('click', function() {
-                startChat();
-            });
-        });
-    </script>
-
-    <!-- Agentforce Bootstrap Script -->
-    <script type='text/javascript' 
-            src='https://orgfarm-798269921f-dev-ed.develop.my.site.com/ESWAgentforceServiceAge1757500134983/assets/js/bootstrap.min.js' 
-            onload='initEmbeddedMessaging()'>
-    </script>
+    
 </body>
 </html>
